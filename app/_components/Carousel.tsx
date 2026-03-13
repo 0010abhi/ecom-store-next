@@ -20,21 +20,21 @@ function SafeImage({ src, alt, ...props }: { src: string | undefined, alt: strin
   return <Image src={src} alt={alt} {...props} />;
 };
 
-export default function Carousel({product}: any) {
-    const [carouselIndex, setCarouselIndex] = useState(0);
+export default function Carousel({ images, alt, changeInterval = 3000 }: any) {
+  const [carouselIndex, setCarouselIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCarouselIndex((prevIndex) => (prevIndex + 1) % product.images.length);
-    }, 3000); // Change image every 3 seconds
+      setCarouselIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, changeInterval); // Default: Change image every 3 seconds
 
     return () => clearInterval(interval); // Clean up on unmount
   }, []);
 
   return (
     <div className="border">
-      <SafeImage src={product.images[carouselIndex]} alt={product.title} width={200} height={200} />
-      <p>{carouselIndex + 1} of {product.images.length}</p>
+      <SafeImage src={images[carouselIndex]} alt={alt} width={200} height={200} />
+      <p>{carouselIndex + 1} of {images.length}</p>
     </div>
   )
 }
