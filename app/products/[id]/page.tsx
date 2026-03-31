@@ -1,10 +1,16 @@
 import { notFound } from "next/navigation";
 
-// Skip static rendering for dynamic routes
 export const dynamic = 'force-dynamic';
 
+function getBaseUrl() {
+  if (typeof window !== 'undefined') return ''; // browser should use relative URL
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // vercel URL
+  return 'http://localhost:3000'; // dev
+}
+
 async function getProduct(id: string) {
-  const res = await fetch(`http://localhost:3000/api/products?id=${id}`, {
+  const baseUrl = getBaseUrl();
+  const res = await fetch(`${baseUrl}/api/products?id=${id}`, {
     next: { revalidate: 60 } // Cache for 60 seconds
   });
   if (!res.ok) return null;

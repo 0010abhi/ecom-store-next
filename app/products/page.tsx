@@ -1,11 +1,17 @@
 import Carousel from "../_components/Carousel";
 import ProductsCardList from "../_components/ProductsCardList";
 
-// Skip static rendering for this page
 export const dynamic = 'force-dynamic';
 
+function getBaseUrl() {
+  if (typeof window !== 'undefined') return ''; // browser should use relative URL
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // vercel URL
+  return 'http://localhost:3000'; // dev
+}
+
 async function getProducts(page = 1, limit = 20) {
-    const res = await fetch(`http://localhost:3000/api/products?page=${page}&limit=${limit}`, {
+    const baseUrl = getBaseUrl();
+    const res = await fetch(`${baseUrl}/api/products?page=${page}&limit=${limit}`, {
         next: { revalidate: 60 } // Cache for 60 seconds
     });
     if (!res.ok) throw new Error("Failed to fetch products");
