@@ -1,0 +1,22 @@
+[
+    {
+        "path": "/",
+        "text": "Home"
+    },
+    {
+        "path": "/products",
+        "text": "Products"
+    },
+    {
+        "path": "/about",
+        "text": "About"
+    },
+    {
+        "path": "/register",
+        "text": "Sign up"
+    },
+    {
+        "path": "/login",
+        "component": "LogInButton"
+    }
+]
