@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 
         if (id) {
             // Get single product
-            const [rows] = await connection.query(
+            const [rows]: any[] = await connection.query(
                 'SELECT * FROM products WHERE id = ?',
                 [id]
             );
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
                 [limit, offset]
             );
 
-            const [countResult] = await connection.query('SELECT COUNT(*) as total FROM products');
+            const [countResult]: any[] = await connection.query('SELECT COUNT(*) as total FROM products');
 
             connection.release();
             return NextResponse.json({
