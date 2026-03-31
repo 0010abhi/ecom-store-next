@@ -1,6 +1,9 @@
 import Carousel from "../_components/Carousel";
 import ProductsCardList from "../_components/ProductsCardList";
 
+// Skip static rendering for this page
+export const dynamic = 'force-dynamic';
+
 async function getProducts(page = 1, limit = 20) {
     const res = await fetch(`http://localhost:3000/api/products?page=${page}&limit=${limit}`, {
         next: { revalidate: 60 } // Cache for 60 seconds

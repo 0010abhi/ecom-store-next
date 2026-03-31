@@ -1,5 +1,8 @@
 import { notFound } from "next/navigation";
 
+// Skip static rendering for dynamic routes
+export const dynamic = 'force-dynamic';
+
 async function getProduct(id: string) {
   const res = await fetch(`http://localhost:3000/api/products?id=${id}`, {
     next: { revalidate: 60 } // Cache for 60 seconds
