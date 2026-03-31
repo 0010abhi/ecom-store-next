@@ -31,7 +31,7 @@ export default function ProductsCardList({ data }: { data: any }) {
                     >
                         <Carousel images={[product.image]} alt={product.title} />
                         <h2 style={{ fontSize: 18, margin: "12px 0 4px 0", textAlign: "center" }} > {product.title} </h2>
-                        < span style={{
+                        <p style={{
                             background: "#f3f3f3",
                             color: "#333",
                             borderRadius: 12,
@@ -39,15 +39,15 @@ export default function ProductsCardList({ data }: { data: any }) {
                             fontSize: 12,
                             marginBottom: 8,
                             display: "inline-block"
-                        }}> {product.category} </span>
-                        < div style={{ margin: "8px 0" }}>
+                        }}> {product.category} </p>
+                        <div style={{ margin: "8px 0" }}>
                             <span style={{ fontWeight: 700, color: "#1a8917", fontSize: 18 }}> ${discounted} </span>
                             < span style={{ textDecoration: "line-through", color: "#888", marginLeft: 8, fontSize: 14 }}> ${product.price} </span>
                             < span style={{ color: "#e63946", marginLeft: 8, fontSize: 13 }}>
                                 20 % OFF
                             </span>
                         </div>
-                        < p style={{ fontSize: 14, color: "#444", textAlign: "center", margin: 0 }}>
+                        <p style={{ fontSize: 14, color: "#444", textAlign: "center", margin: 0 }}>
                             {
                                 product.description.length > 80
                                     ? product.description.slice(0, 80) + "..."

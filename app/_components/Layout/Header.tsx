@@ -1,4 +1,4 @@
-import HeaderBanner from "../HeaderBanner";
+import HeaderBanner from "./HeaderBanner";
 import Link from "next/link";
 import headerLinks from "../../../config/header-links.json";
 import LogInButton from "../LogInButton";

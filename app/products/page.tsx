@@ -1,12 +1,13 @@
-import Carousel from "../_components/Carousel";
+'use client';
+import { createContext, useEffect, useState } from 'react';
+
+const ProductsContext = createContext([] as any);
 import ProductsCardList from "../_components/ProductsCardList";
 
-export const dynamic = 'force-dynamic';
-
 function getBaseUrl() {
-  if (typeof window !== 'undefined') return ''; // browser should use relative URL
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // vercel URL
-  return 'http://localhost:3000'; // dev
+    if (typeof window !== 'undefined') return ''; // browser should use relative URL
+    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // vercel URL
+    return 'http://localhost:3000'; // dev
 }
 
 async function getProducts(page = 1, limit = 20) {
@@ -18,14 +19,24 @@ async function getProducts(page = 1, limit = 20) {
     return res.json();
 }
 
-export default async function ProductsPage() {
-    const { products } = await getProducts();
-    return (
+export default function ProductsPage() {
+    const [products, setProducts] = useState<any[]>([]);
+
+    useEffect(() => {
+        getProducts().then(data => {
+            setProducts(data.products);
+        }).catch(err => {
+            console.error("Error fetching products:", err);
+        });
+    }, []);
+
+    return (<ProductsContext.Provider value={{ products }}>
         <div style={{ display: 'flex', flexDirection: 'column', padding: '15px' }}>
             <div>
                 <h1>Products</h1>
                 <ProductsCardList data={products} />
             </div>
         </div>
+    </ProductsContext.Provider>
     );
 }

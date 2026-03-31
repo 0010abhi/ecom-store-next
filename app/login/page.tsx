@@ -1,6 +1,8 @@
 'use client';
 import { useState } from "react";
-import TextInput from "../_components/TextInput";
+import TextInput from "../_components/Input/Text";
+import SubmitButton from "../_components/Button/Submit";
+import PasswordInput from "../_components/Input/Password";
 
 export default function LogIn() {
     const [username, setUsername] = useState<string>('');
@@ -42,11 +44,9 @@ export default function LogIn() {
                 loading ? <p>Logging in...</p> : <h1>Log In</h1>
             }
             <form onSubmit={handleLogInSubmit}>
-                <TextInput name="username" placeholder="Username" value={username} onChange={(e) => { setUsername(e.target.value) }} />
-                <div>
-                    <input name="password" type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
-                </div>
-                <button type="submit">Log In</button>
+                <TextInput name="username" placeholder="Username" value={username} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setUsername(e.target.value) }} />
+                <PasswordInput name="password" placeholder="Password" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) }} />
+                <SubmitButton title="Log In" />
             </form>
         </div>
     )
