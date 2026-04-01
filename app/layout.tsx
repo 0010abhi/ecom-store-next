@@ -5,6 +5,9 @@ import HeaderPublic from "./_components/Layout/Header";
 import Footer from "./_components/Layout/Footer";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
+import ContactUs from "./_components/Layout/ContactUs";
+import CustomerReviews from "./_components/Layout/CustomerReviews";
+import { AuthProvider } from "./_context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,13 +34,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <HeaderPublic />
-        <main>
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <HeaderPublic />
+          <main>
+            {children}
+          </main>
+          <Footer />
+        </AuthProvider>
         <SpeedInsights />
-        <Analytics/>
+        <Analytics />
       </body>
     </html>
   );

@@ -1,5 +1,7 @@
 'use client';
 import { useState } from "react";
+import { useAuth } from "../_context/AuthContext";
+import { useRouter } from "next/navigation";
 import TextInput from "../_components/Input/Text";
 import SubmitButton from "../_components/Button/Submit";
 import PasswordInput from "../_components/Input/Password";
@@ -7,29 +9,21 @@ import PasswordInput from "../_components/Input/Password";
 export default function LogIn() {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
+    const { login, loading } = useAuth();
+    const router = useRouter();
 
     async function handleLogInSubmit(e: React.FormEvent) {
         e.preventDefault();
-        setLoading(true);
-        // const response = await fetch('http://localhost:3000/login', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ username, password }),
-        //     credentials: 'include' // <--- CRITICAL for sessions
-        // });
-
-        const response = await new Promise<Response>((resolve) => {
-            setTimeout(() => {
-                resolve(new Response(null, { status: 200 }));
-            }, 7000);
-        });
-        if (response.ok) {
-            alert("Logged in!");
+        setError('');
+        
+        const success = await login(username, password);
+        if (success) {
+            alert("Logged in successfully!");
+            router.push('/');
         } else {
-            alert("Login failed");
+            setError("Login failed. Username and password must be at least 3 characters.");
         }
-        setLoading(false);
     };
 
     return (
@@ -43,6 +37,7 @@ export default function LogIn() {
             {
                 loading ? <p>Logging in...</p> : <h1>Log In</h1>
             }
+            {error && <p style={{ color: '#e63946', marginBottom: '10px' }}>{error}</p>}
             <form onSubmit={handleLogInSubmit}>
                 <TextInput name="username" placeholder="Username" value={username} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setUsername(e.target.value) }} />
                 <PasswordInput name="password" placeholder="Password" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) }} />

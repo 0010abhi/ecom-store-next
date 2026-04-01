@@ -32,8 +32,8 @@ export default function Carousel({ images, alt, changeInterval = 3000, width = 2
   }, []);
 
   return (
-    <div className="border">
-      <SafeImage src={images[carouselIndex]} alt={alt} width={200} height={200} />
+    <div className="border" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }} >
+      <SafeImage src={images[carouselIndex]} alt={alt} width={width} height={height} />
       <p>{carouselIndex + 1} of {images.length}</p>
     </div>
   )

@@ -8,7 +8,8 @@ export default function HeaderBanner() {
         backgroundColor: '#090909',
         color: '#fff',
         fontSize: '16px',
-        minWidth: '1200px',
+        minWidth: '600px',
+        width: '100%',
         padding: '8px'
     }}>
         Complimentary shipping on orders over ₹2500
