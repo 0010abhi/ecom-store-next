@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import headerLinks from "../../../config/header-links.json";
+import headerLinks from "../../config/header-links.json";
 import LogInButton from "../LogInButton";
 
 export default function MobileMenu() {

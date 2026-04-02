@@ -2,7 +2,7 @@
 
 import HeaderBanner from "./HeaderBanner";
 import Link from "next/link";
-import headerLinks from "../../../config/header-links.json";
+import headerLinks from "../../config/header-links.json";
 import LogInButton from "../LogInButton";
 import MobileMenu from "./MobileMenu";
 import Image from 'next/image';

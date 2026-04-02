@@ -6,10 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui",
+    "test:unit": "vitest --include='**/*.test.ts' app/__tests__/unit",
+    "test:component": "vitest --include='**/*.test.tsx' app/__tests__/components",
+    "test:api": "vitest --include='**/*.test.ts' app/__tests__/api",
+    "test:integration": "vitest --include='**/*.test.tsx' app/__tests__/integration",
+    "setup-db": "node scripts/setup-db.js"
   },
   "dependencies": {
     "@apollo/client": "^4.1.4",
+    "@testing-library/jest-dom": "^6.9.1",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "apollo-server-micro": "^3.13.0",
@@ -22,12 +32,24 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/coverage-v8": "^4.1.2",
+    "@vitest/ui": "^4.1.2",
     "eslint": "^9",
     "eslint-config-next": "16.1.4",
+    "jest-environment-jsdom": "^30.3.0",
+    "jsdom": "^29.0.1",
+    "node-mocks-http": "^1.17.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.2",
+    "vitest-canvas-mock": "^1.1.4"
   }
 }
