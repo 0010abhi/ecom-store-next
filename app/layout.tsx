@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import HeaderPublic from "./_components/Layout/Header";
 import Footer from "./_components/Layout/Footer";
@@ -8,6 +8,9 @@ import { Analytics } from "@vercel/analytics/next"
 import ContactUs from "./_components/Layout/ContactUs";
 import CustomerReviews from "./_components/Layout/CustomerReviews";
 import { AuthProvider } from "./_context/AuthContext";
+import { cn } from "@/lib/utils";
+
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", inter.variable)}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
