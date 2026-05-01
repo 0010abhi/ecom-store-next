@@ -1,48 +1,46 @@
-import pool from '@/app/lib/db';
+import { db }       from '@/app/lib/db';
+import { products } from '@/db/schema';
+import { eq, sql }  from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
-    console.log('Received GET request for products with id:', request.url, id);
-    try {
-        const connection = await pool.getConnection();
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+  console.log('Received GET request for products with id:', request.url, id);
 
-        if (id) {
-            // Get single product
-            const [rows]: any[] = await connection.query(
-                'SELECT * FROM products WHERE id = ?',
-                [id]
-            );
-            connection.release();
-            return NextResponse.json(rows[0] || null);
-        } else {
-            // Get all products with pagination
-            const page = parseInt(searchParams.get('page') || '1');
-            const limit = parseInt(searchParams.get('limit') || '20');
-            const offset = (page - 1) * limit;
+  try {
+    if (id) {
+      const row = await db
+        .select()
+        .from(products)
+        .where(eq(products.id, Number(id)))
+        .limit(1);
 
-            const [products] = await connection.query(
-                'SELECT * FROM products LIMIT ? OFFSET ?',
-                [limit, offset]
-            );
-
-            const [countResult]: any[] = await connection.query('SELECT COUNT(*) as total FROM products');
-
-            connection.release();
-            return NextResponse.json({
-                products,
-                total: countResult[0]?.total || 0,
-                page,
-                limit,
-                pages: Math.ceil((countResult[0]?.total || 0) / limit),
-            });
-        }
-    } catch (error: any) {
-        console.error('Database error:', error);
-        return NextResponse.json(
-            { error: 'Failed to fetch products', message: error.message },
-            { status: 500 }
-        );
+      return NextResponse.json(row[0] ?? null);
     }
+
+    const page   = parseInt(searchParams.get('page')  ?? '1');
+    const limit  = parseInt(searchParams.get('limit') ?? '20');
+    const offset = (page - 1) * limit;
+
+    const [rows, [{ total }]] = await Promise.all([
+      db.select().from(products).limit(limit).offset(offset),
+      db.select({ total: sql<number>`count(*)` }).from(products),
+    ]);
+
+    return NextResponse.json({
+      products: rows,
+      total,
+      page,
+      limit,
+      pages: Math.ceil(total / limit),
+    });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Database error:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch products', message },
+      { status: 500 }
+    );
+  }
 }

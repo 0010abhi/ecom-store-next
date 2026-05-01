@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/test-results
 
 # next.js
 /.next/
@@ -43,7 +44,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# drizzle studio local cache
+*.db
+*.db-shm
+*.db-wal
+
 # large image files
-public/images/*.jpg
-public/images/*.png
-public/images/*.jpeg
+public/images/

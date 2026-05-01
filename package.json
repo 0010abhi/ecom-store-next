@@ -15,7 +15,10 @@
     "test:component": "vitest --include='**/*.test.tsx' app/__tests__/components",
     "test:api": "vitest --include='**/*.test.ts' app/__tests__/api",
     "test:integration": "vitest --include='**/*.test.tsx' app/__tests__/integration",
-    "setup-db": "node scripts/setup-db.js"
+    "setup-db": "node scripts/setup-db.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate":  "drizzle-kit migrate",
+    "db:studio":   "drizzle-kit studio"
   },
   "dependencies": {
     "@apollo/client": "^4.1.4",
@@ -25,6 +28,7 @@
     "apollo-server-micro": "^3.13.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "drizzle-orm": "^0.45.2",
     "graphql": "^16.12.0",
     "graphql-tag": "^2.12.6",
     "lucide-react": "^1.7.0",
@@ -49,6 +53,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/coverage-v8": "^4.1.2",
     "@vitest/ui": "^4.1.2",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.1.4",
     "jest-environment-jsdom": "^30.3.0",
